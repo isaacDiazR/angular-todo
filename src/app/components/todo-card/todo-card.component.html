@@ -1,0 +1,66 @@
+<div class="todo-card" [class.completed]="todo.isCompleted" [class]="priorityClass">
+  <!-- Badge de prioridad -->
+  <div class="priority-badge" [class]="priorityClass">
+    {{ priorityLabel }}
+  </div>
+
+  <!-- Estado completado -->
+  <div class="status-badge" *ngIf="todo.isCompleted">
+    ✓ COMPLETADO
+  </div>
+
+  <!-- Contenido -->
+  <div class="card-content">
+    <h3 class="card-title" [class.completed-text]="todo.isCompleted">
+      {{ todo.title }}
+    </h3>
+    <p class="card-description">
+      {{ todo.description }}
+    </p>
+  </div>
+
+  <!-- Acciones -->
+  <div class="card-actions">
+    <button 
+      class="action-btn complete-btn"
+      (click)="onToggleComplete()"
+      [disabled]="loading"
+      [title]="todo.isCompleted ? 'Marcar como pendiente' : 'Marcar como completado'"
+    >
+      <span *ngIf="!todo.isCompleted">☐</span>
+      <span *ngIf="todo.isCompleted">☑</span>
+    </button>
+
+    <button 
+      class="action-btn edit-btn"
+      (click)="onEdit()"
+      [disabled]="loading"
+      title="Editar"
+    >
+      ✎
+    </button>
+
+    <button 
+      class="action-btn delete-btn"
+      (click)="onDeleteClick()"
+      [disabled]="loading"
+      title="Eliminar"
+    >
+      ✕
+    </button>
+  </div>
+
+  <!-- Confirmación de eliminación -->
+  <div class="delete-confirm" *ngIf="showDeleteConfirm">
+    <p class="confirm-text">¿Eliminar este TODO?</p>
+    <div class="confirm-actions">
+      <button class="btn-confirm-no" (click)="cancelDelete()">NO</button>
+      <button class="btn-confirm-yes" (click)="confirmDelete()">SÍ</button>
+    </div>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" *ngIf="loading">
+    <div class="spinner"></div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+npm-debug.log
+
+# Build outputs
+dist/
+.angular/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Tests
+coverage/
+*.spec.ts

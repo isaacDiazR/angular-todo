@@ -1,0 +1,113 @@
+<div class="todo-form">
+  <h2 class="form-title">
+    {{ isEditMode ? 'EDITAR TODO' : 'NUEVO TODO' }}
+  </h2>
+
+  <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+    <!-- Título -->
+    <div class="form-group">
+      <label for="title" class="form-label">TÍTULO</label>
+      <input 
+        id="title"
+        type="text" 
+        formControlName="title"
+        class="cyber-input"
+        placeholder="Ingresa el título..."
+        [class.invalid]="todoForm.get('title')?.invalid && todoForm.get('title')?.touched"
+      >
+      <span 
+        *ngIf="todoForm.get('title')?.invalid && todoForm.get('title')?.touched" 
+        class="error-text"
+      >
+        {{ getErrorMessage('title') }}
+      </span>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="description" class="form-label">DESCRIPCIÓN</label>
+      <textarea 
+        id="description"
+        formControlName="description"
+        class="cyber-textarea"
+        placeholder="Ingresa la descripción..."
+        rows="4"
+        [class.invalid]="todoForm.get('description')?.invalid && todoForm.get('description')?.touched"
+      ></textarea>
+      <span 
+        *ngIf="todoForm.get('description')?.invalid && todoForm.get('description')?.touched" 
+        class="error-text"
+      >
+        {{ getErrorMessage('description') }}
+      </span>
+    </div>
+
+    <!-- Prioridad -->
+    <div class="form-group">
+      <label for="priority" class="form-label">PRIORIDAD</label>
+      <div class="priority-buttons">
+        <button 
+          type="button"
+          class="priority-btn low"
+          [class.active]="todoForm.get('priority')?.value === 1"
+          (click)="todoForm.patchValue({priority: 1})"
+        >
+          BAJA
+        </button>
+        <button 
+          type="button"
+          class="priority-btn medium"
+          [class.active]="todoForm.get('priority')?.value === 2"
+          (click)="todoForm.patchValue({priority: 2})"
+        >
+          MEDIA
+        </button>
+        <button 
+          type="button"
+          class="priority-btn high"
+          [class.active]="todoForm.get('priority')?.value === 3"
+          (click)="todoForm.patchValue({priority: 3})"
+        >
+          ALTA
+        </button>
+      </div>
+    </div>
+
+    <!-- Completado (solo en modo edición) -->
+    <div *ngIf="isEditMode" class="form-group">
+      <label class="checkbox-label">
+        <input 
+          type="checkbox" 
+          formControlName="isCompleted"
+          class="cyber-checkbox"
+        >
+        <span class="checkbox-text">MARCAR COMO COMPLETADO</span>
+      </label>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error" class="form-error">
+      {{ error }}
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn-secondary" 
+        (click)="onCancel()"
+        [disabled]="loading"
+      >
+        CANCELAR
+      </button>
+      <button 
+        type="submit" 
+        class="btn-primary"
+        [disabled]="loading || todoForm.invalid"
+      >
+        <span *ngIf="!loading">{{ isEditMode ? 'ACTUALIZAR' : 'CREAR' }}</span>
+        <span *ngIf="loading" class="loading-text">PROCESANDO...</span>
+      </button>
+    </div>
+  </form>
+</div>

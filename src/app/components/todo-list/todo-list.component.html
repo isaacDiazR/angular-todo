@@ -1,0 +1,125 @@
+<div class="todo-list-container">
+  <!-- Header -->
+  <header class="header">
+    <h1>TODO - Angular</h1>
+    <button class="btn-primary" (click)="openCreateForm()">
+      <span class="btn-icon">+</span> NUEVA TAREA
+    </button>
+  </header>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="BUSCAR..." 
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        class="cyber-input"
+      >
+    </div>
+
+    <div class="filter-group">
+      <select 
+        [(ngModel)]="filterStatus" 
+        (change)="onFilterChange()"
+        class="cyber-select"
+      >
+        <option value="all">TODOS</option>
+        <option value="pending">PENDIENTES</option>
+        <option value="completed">COMPLETADOS</option>
+      </select>
+
+      <select 
+        [(ngModel)]="filterPriority" 
+        (change)="onFilterChange()"
+        class="cyber-select"
+      >
+        <option value="all">TODAS LAS PRIORIDADES</option>
+        <option [value]="1">BAJA</option>
+        <option [value]="2">MEDIA</option>
+        <option [value]="3">ALTA</option>
+      </select>
+
+      <select 
+        [(ngModel)]="sortBy" 
+        (change)="onFilterChange()"
+        class="cyber-select"
+      >
+        <option value="date">ORDENAR: FECHA</option>
+        <option value="title">ORDENAR: TÍTULO</option>
+        <option value="priority">ORDENAR: PRIORIDAD</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    <div class="cyber-loader"></div>
+    <p>CARGANDO DATOS...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error-message">
+    <span class="error-icon">⚠</span>
+    {{ error }}
+  </div>
+
+  <!-- Lista de TODOs -->
+  <div *ngIf="!loading && !error" class="todos-grid">
+    <app-todo-card
+      *ngFor="let todo of paginatedTodos"
+      [todo]="todo"
+      (edit)="openEditForm($event)"
+      (delete)="onTodoDeleted()"
+      (toggle)="onTodoToggled()"
+    ></app-todo-card>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && filteredTodos.length === 0" class="empty-state">
+    <div class="empty-icon">📋</div>
+    <h3>NO HAY TODOS</h3>
+    <p>Crea un nuevo TODO para comenzar</p>
+  </div>
+
+  <!-- Paginación -->
+  <div *ngIf="totalPages > 1" class="pagination">
+    <button 
+      class="page-btn" 
+      (click)="goToPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      ◄
+    </button>
+    
+    <button 
+      *ngFor="let page of pageNumbers"
+      class="page-btn"
+      [class.active]="page === currentPage"
+      (click)="goToPage(page)"
+    >
+      {{ page }}
+    </button>
+    
+    <button 
+      class="page-btn" 
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      ►
+    </button>
+  </div>
+
+  <!-- Modal de formulario -->
+  <div *ngIf="showForm" class="modal-overlay" (click)="closeForm()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeForm()">✕</button>
+      <app-todo-form
+        [todo]="editingTodo"
+        (saved)="onTodoSaved()"
+        (cancel)="closeForm()"
+      ></app-todo-form>
+    </div>
+  </div>
+</div>

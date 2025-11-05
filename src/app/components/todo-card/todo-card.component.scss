@@ -1,0 +1,303 @@
+.todo-card {
+  background: var(--bg-card);
+  border: 2px solid rgba(0, 245, 255, 0.3);
+  border-radius: var(--border-radius);
+  padding: 25px;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+  animation: slideIn 0.5s ease-out;
+}
+
+.todo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-purple));
+}
+
+.todo-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+}
+
+/* Variaciones por prioridad */
+.todo-card.low::before {
+  background: linear-gradient(90deg, var(--cyber-green), var(--cyber-cyan));
+}
+
+.todo-card.medium::before {
+  background: linear-gradient(90deg, var(--cyber-yellow), var(--cyber-cyan));
+}
+
+.todo-card.high::before {
+  background: linear-gradient(90deg, var(--cyber-pink), var(--cyber-purple));
+}
+
+.todo-card.completed {
+  opacity: 0.7;
+  border-color: rgba(0, 255, 65, 0.3);
+}
+
+.todo-card.completed::before {
+  background: var(--cyber-green);
+}
+
+/* ===== BADGES ===== */
+.priority-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 6px 14px;
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.priority-badge.low {
+  background: rgba(0, 255, 65, 0.2);
+  border: 1px solid var(--cyber-green);
+  color: var(--cyber-green);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+.priority-badge.medium {
+  background: rgba(255, 190, 11, 0.2);
+  border: 1px solid var(--cyber-yellow);
+  color: var(--cyber-yellow);
+  box-shadow: 0 0 10px rgba(255, 190, 11, 0.3);
+}
+
+.priority-badge.high {
+  background: rgba(255, 0, 110, 0.2);
+  border: 1px solid var(--cyber-pink);
+  color: var(--cyber-pink);
+  box-shadow: 0 0 10px rgba(255, 0, 110, 0.3);
+}
+
+.status-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 6px 14px;
+  background: rgba(0, 255, 65, 0.2);
+  border: 1px solid var(--cyber-green);
+  color: var(--cyber-green);
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+  z-index: 2;
+}
+
+/* ===== CONTENIDO ===== */
+.card-content {
+  margin-top: 20px;
+  margin-bottom: 60px;
+}
+
+.card-title {
+  font-size: 1.4rem;
+  color: var(--cyber-cyan);
+  margin-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+  line-height: 1.3;
+}
+
+.card-title.completed-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.card-description {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* ===== ACCIONES ===== */
+.card-actions {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  background: var(--bg-darker);
+  border: 2px solid var(--cyber-cyan);
+  color: var(--cyber-cyan);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-weight: 700;
+}
+
+.action-btn:hover:not(:disabled) {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.action-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.complete-btn:hover:not(:disabled) {
+  background: var(--cyber-green);
+  border-color: var(--cyber-green);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px var(--cyber-green);
+}
+
+.edit-btn:hover:not(:disabled) {
+  background: var(--cyber-yellow);
+  border-color: var(--cyber-yellow);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px var(--cyber-yellow);
+}
+
+.delete-btn:hover:not(:disabled) {
+  background: var(--cyber-pink);
+  border-color: var(--cyber-pink);
+  color: white;
+  box-shadow: 0 0 20px var(--cyber-pink);
+}
+
+/* ===== CONFIRMACIÓN DE ELIMINACIÓN ===== */
+.delete-confirm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 14, 39, 0.98);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius);
+  z-index: 10;
+  animation: fadeIn 0.3s ease;
+}
+
+.confirm-text {
+  color: var(--cyber-pink);
+  font-family: var(--font-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-align: center;
+  text-shadow: 0 0 10px var(--cyber-pink);
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-confirm-no,
+.btn-confirm-yes {
+  padding: 12px 30px;
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border: 2px solid;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.btn-confirm-no {
+  background: transparent;
+  border-color: var(--cyber-cyan);
+  color: var(--cyber-cyan);
+}
+
+.btn-confirm-no:hover {
+  background: var(--cyber-cyan);
+  color: var(--bg-dark);
+  box-shadow: 0 0 20px var(--cyber-cyan);
+}
+
+.btn-confirm-yes {
+  background: var(--cyber-pink);
+  border-color: var(--cyber-pink);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+}
+
+.btn-confirm-yes:hover {
+  background: var(--cyber-purple);
+  border-color: var(--cyber-purple);
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.7);
+  transform: scale(1.05);
+}
+
+/* ===== LOADING OVERLAY ===== */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 14, 39, 0.95);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--border-radius);
+  z-index: 5;
+}
+
+.spinner {
+  border: 3px solid var(--bg-card);
+  border-top: 3px solid var(--cyber-cyan);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+  box-shadow: 0 0 15px var(--cyber-cyan);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-description {
+    font-size: 0.9rem;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}

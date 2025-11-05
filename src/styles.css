@@ -1,1 +1,255 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===== CYBERPUNK TODO - ESTILOS GLOBALES ===== */
+
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* Variables CSS - Tema Cyberpunk */
+:root {
+  /* Colores principales */
+  --cyber-pink: #ff006e;
+  --cyber-cyan: #00f5ff;
+  --cyber-yellow: #ffbe0b;
+  --cyber-purple: #8b5cf6;
+  --cyber-green: #00ff41;
+  
+  /* Colores de fondo */
+  --bg-dark: #0a0e27;
+  --bg-darker: #050816;
+  --bg-card: #1a1f3a;
+  --bg-card-hover: #232949;
+  
+  /* Colores de texto */
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-glow: #00f5ff;
+  
+  /* Sombras y efectos */
+  --shadow-cyan: 0 0 20px rgba(0, 245, 255, 0.5);
+  --shadow-pink: 0 0 20px rgba(255, 0, 110, 0.5);
+  --shadow-purple: 0 0 20px rgba(139, 92, 246, 0.5);
+  
+  /* Bordes */
+  --border-cyber: 2px solid var(--cyber-cyan);
+  --border-radius: 8px;
+  
+  /* Fuentes */
+  --font-primary: 'Orbitron', sans-serif;
+  --font-secondary: 'Rajdhani', sans-serif;
+}
+
+/* Reset y estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-secondary);
+  background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Efecto de scanlines (opcional) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.05;
+}
+
+/* Grid de fondo cyberpunk */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+  border-left: 1px solid var(--cyber-cyan);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--cyber-cyan), var(--cyber-purple));
+  border-radius: 5px;
+  box-shadow: 0 0 10px var(--cyber-cyan);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--cyber-pink), var(--cyber-purple));
+  box-shadow: 0 0 15px var(--cyber-pink);
+}
+
+/* Animaciones globales */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 2px var(--cyber-pink), -2px -2px var(--cyber-cyan);
+  }
+  25% {
+    text-shadow: -2px -2px var(--cyber-pink), 2px 2px var(--cyber-cyan);
+  }
+  50% {
+    text-shadow: 2px -2px var(--cyber-pink), -2px 2px var(--cyber-cyan);
+  }
+  75% {
+    text-shadow: -2px 2px var(--cyber-pink), 2px -2px var(--cyber-cyan);
+  }
+  100% {
+    text-shadow: 2px 2px var(--cyber-pink), -2px -2px var(--cyber-cyan);
+  }
+}
+
+@keyframes neon-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--cyber-cyan),
+                0 0 10px var(--cyber-cyan),
+                0 0 20px var(--cyber-cyan);
+  }
+  50% {
+    box-shadow: 0 0 10px var(--cyber-cyan),
+                0 0 20px var(--cyber-cyan),
+                0 0 30px var(--cyber-cyan);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos de texto */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* Utilidades */
+.glitch {
+  animation: glitch 3s infinite;
+  position: relative;
+}
+
+.glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px;
+  text-shadow: -2px 0 var(--cyber-pink);
+  top: 0;
+  color: var(--text-primary);
+  background: var(--bg-dark);
+  overflow: hidden;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(42px, 9999px, 44px, 0);
+  }
+  5% {
+    clip: rect(12px, 9999px, 59px, 0);
+  }
+  10% {
+    clip: rect(48px, 9999px, 29px, 0);
+  }
+  15% {
+    clip: rect(42px, 9999px, 73px, 0);
+  }
+  20% {
+    clip: rect(63px, 9999px, 27px, 0);
+  }
+  25% {
+    clip: rect(34px, 9999px, 55px, 0);
+  }
+  30% {
+    clip: rect(86px, 9999px, 73px, 0);
+  }
+  35% {
+    clip: rect(20px, 9999px, 20px, 0);
+  }
+  40% {
+    clip: rect(26px, 9999px, 60px, 0);
+  }
+  45% {
+    clip: rect(25px, 9999px, 66px, 0);
+  }
+  50% {
+    clip: rect(57px, 9999px, 98px, 0);
+  }
+  55% {
+    clip: rect(5px, 9999px, 46px, 0);
+  }
+  60% {
+    clip: rect(82px, 9999px, 31px, 0);
+  }
+  65% {
+    clip: rect(54px, 9999px, 27px, 0);
+  }
+  70% {
+    clip: rect(28px, 9999px, 99px, 0);
+  }
+  75% {
+    clip: rect(45px, 9999px, 69px, 0);
+  }
+  80% {
+    clip: rect(23px, 9999px, 85px, 0);
+  }
+  85% {
+    clip: rect(54px, 9999px, 84px, 0);
+  }
+  90% {
+    clip: rect(45px, 9999px, 47px, 0);
+  }
+  95% {
+    clip: rect(37px, 9999px, 20px, 0);
+  }
+  100% {
+    clip: rect(4px, 9999px, 91px, 0);
+  }
+}
